@@ -12,7 +12,7 @@
       <div>
         <article class="c-v-pic-wrap" style="height: 357px;">
           <section class="p-h-video-box" id="videoPlay">
-            <img :src="courseWebVo.cover" :alt="courseWebVo.title" class="dis c-v-pic">
+            <img height="357px" :src="courseWebVo.cover" :alt="courseWebVo.title" class="dis c-v-pic">
           </section>
         </article>
         <aside class="c-attr-wrap">
@@ -34,7 +34,8 @@
               </span>
             </section>
             <section class="c-attr-mt">
-              <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+              <!-- <a href="#" v-if="Number(courseWebVo.price) === 0" title="立即观看" class="comm-btn c-btn-3">立即观看</a> -->
+              <a @click="createOrder()" href="#"  title="立即购买" class="comm-btn c-btn-3">立即购买</a>
             </section>
           </section>
         </aside>
@@ -53,7 +54,7 @@
               <aside>
                 <span class="c-fff f-fM">课时数</span>
                 <br>
-                <h6 class="c-fff f-fM mt10">20</h6>
+                <h6 class="c-fff f-fM mt10">{{courseWebVo.lessonNum}}</h6>
               </aside>
             </li>
             <li>
@@ -61,7 +62,7 @@
               <aside>
                 <span class="c-fff f-fM">浏览数</span>
                 <br>
-                <h6 class="c-fff f-fM mt10">501</h6>
+                <h6 class="c-fff f-fM mt10">{{courseWebVo.viewCount}}</h6>
               </aside>
             </li>
           </ol>
@@ -162,15 +163,25 @@
 
 <script>
 import courseApi from '@/api/course'
+import orderApi from '@/api/orders'
+
 export default {
    asyncData({ params, error }) {
      return courseApi.getCourseInfo(params.id)
         .then(response => {
           return {
-            courseWebVo: response.data.data.courseWebVo,
-            chapterVideoList: response.data.data.chapterVideoList
+            courseWebVo: response.data.data.courseDetailVo,
+            chapterVideoList: response.data.data.chapterVideoList,
+            courseId: params.id
           }
         })
+   },
+   methods:{
+    createOrder(){
+      orderApi.createOrders(this.courseId).then(response=>{
+          this.$router.push({path:'/orders/'+ response.data.data})
+      })
+    }
    }
 };
 </script>

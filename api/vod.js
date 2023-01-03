@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 export default {
-  getPlayAuth(vid) {
+  getPlayAuth(videoId) {
     return request({
-      url: `/eduvod/video/getPlayAuth/${vid}`,
+      url: `/eduvod/video/getPlayAuth/${videoId}`,
       method: 'get'
     })
   }

@@ -17,9 +17,9 @@ export default {
     })
   },
   //课程详情的方法
-  getCourseInfo(id) {
+  getCourseInfo(courseId) {
     return request({
-      url: '/eduservice/coursefront/getFrontCourseInfo/'+id,
+      url: `/eduservice/front/course/info/${courseId}`,
       method: 'get'
     })
   }

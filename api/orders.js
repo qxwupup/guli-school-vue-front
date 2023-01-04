@@ -13,5 +13,20 @@ export default {
             url: `/eduorder/order/info/${orderNo}`,
             method: 'get'
         })
-    }
+    },
+
+    
+  createQRCode(orderNo){
+    return request({
+      url: `/eduorder/pay/create/QRCode/${orderNo}`,
+      method: 'get'
+    })
+  },
+
+  queryPayStatus(orderNo){
+    return request({
+      url: `/eduorder/pay/query/status/${orderNo}`,
+      method: 'get'
+    })
+  },
 }
